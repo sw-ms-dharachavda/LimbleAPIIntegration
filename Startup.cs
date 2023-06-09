@@ -23,6 +23,10 @@ namespace LimbleIntegration
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
+
+            // Add LimbleApiClient as a singleton service
+            string apiUrl = Configuration["Limble:ApiUrl"];
+            services.AddSingleton<LimbleApiClient>(new LimbleApiClient(apiUrl));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,7 +49,7 @@ namespace LimbleIntegration
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapRazorPages();
+                endpoints.MapControllers();
             });
         }
     }
